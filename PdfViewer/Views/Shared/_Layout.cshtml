@@ -14,11 +14,12 @@
     @Scripts.Render("~/bundles/modernizr")
 
     <link rel="icon" type="image/png" href="~/Content/images/favicon.png">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf_viewer.min.css" />
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
+        <div class="container-fluid">
             @Html.ActionLink(appName, "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -32,11 +33,11 @@
             </div>
         </div>
     </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - @appName</p>
+
+    @RenderBody()
+    <div class="container-fluid">
+        <footer class="pdf-footer">
+            <p>&copy; @DateTime.Now.Year - Pdf Viewer</p>
         </footer>
     </div>
 

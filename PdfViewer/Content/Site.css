@@ -18,3 +18,137 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+.gray-bg, .bg-muted {
+    background-color: #f3f3f4;
+}
+
+.wrapper {
+    padding: 0 20px;
+}
+
+.white-bg {
+    background-color: #ffffff;
+}
+
+.page-heading {
+    border-top: 0;
+    padding: 0 10px 20px 10px;
+}
+
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.fadeIn {
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+}
+
+@media (min-width: 992px) {
+    .col-lg-12 {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+.ibox {
+    clear: both;
+    margin-bottom: 25px;
+    margin-top: 0;
+    padding: 0;
+}
+
+.ibox-content {
+    clear: both;
+}
+
+.ibox-content {
+    background-color: #ffffff;
+    color: inherit;
+    padding: 15px 20px 20px 20px;
+    border-color: #e7eaec;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.pdf-toolbar {
+    max-width: 600px;
+    margin: 0 auto;
+}
+.pdf-toolbar .btn-group {
+    width: 100%;
+}
+.pdf-toolbar .btn-white {
+    color: inherit;
+    background: white;
+    border: 1px solid #e7eaec;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    grid-gap: 3px;
+    min-height:38px;
+    font-size: 13px;
+}
+.pdf-toolbar .input-group {
+    width: auto;
+}
+    .pdf-toolbar .input-group input {
+        max-width: 60px;
+        border-radius: 3px;
+    }
+.pdf-footer p {
+    margin: 0;
+    padding: 15px 0;
+}
+.wrapper.wrapper-content {
+    padding-bottom: 70px;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+.m-t-md {
+    margin-top: 20px;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.b-r-md {
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
+.border-top-bottom {
+    border-top: 1px solid #e7eaec;
+    border-bottom: 1px solid #e7eaec;
+}
+
+.border-left-right {
+    border-left: 1px solid #e7eaec;
+    border-right: 1px solid #e7eaec;
+}
+
+canvas[Attributes Style] {
+    aspect-ratio: auto 892 / 1262;
+}
+
+canvas {
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}

@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Viewer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.min.js"></script>
+</head>
+<body>
+    <canvas id="the-canvas" class="pdfcanvas border-left-right border-top-bottom b-r-md" height="1262" width="892"></canvas>
+    <div>
+        <button id="prev">Previous</button>
+        <button id="next">Next</button>
+        <input type="number" id="page_num" value="1" min="1" />
+        <span id="page_count"></span>
+        <button id="zoomin">Zoom In</button>
+        <button id="zoomout">Zoom Out</button>
+        <button id="zoomfit">Zoom Fit</button>
+    </div>
+    <script>
+        var url = '@Url.Content("~/Content/report.pdf")';
+
+        var pdfDoc = null,
+            pageNum = 1,
+            pageRendering = false,
+            pageNumPending = null,
+            scale = 1.5,
+            zoomRange = 0.25,
+            canvas = document.getElementById('the-canvas'),
+            ctx = canvas.getContext('2d');
+
+        /**
+         * Get page info from document, resize canvas accordingly, and render page.
+         * @@param num Page number.
+         */
+        function renderPage(num) {
+            pageRendering = true;
+            // Using promise to fetch the page
+            pdfDoc.getPage(num).then(function(page) {
+                var viewport = page.getViewport({ scale: scale });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                // Render PDF page into canvas context
+                var renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+                var renderTask = page.render(renderContext);
+
+                // Wait for rendering to finish
+                renderTask.promise.then(function () {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        // New page rendering is pending
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+
+            // Update page counters
+            document.getElementById('page_num').value = num;
+        }
+
+        /**
+         * If another page rendering in progress, waits until the rendering is
+         * finished. Otherwise, executes rendering immediately.
+         */
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+
+        /**
+         * Displays previous page.
+         */
+        function onPrevPage() {
+            if (pageNum <= 1) {
+                return;
+            }
+            pageNum--;
+            queueRenderPage(pageNum);
+        }
+        document.getElementById('prev').addEventListener('click', onPrevPage);
+
+        /**
+         * Displays next page.
+         */
+        function onNextPage() {
+            if (pageNum >= pdfDoc.numPages) {
+                return;
+            }
+            pageNum++;
+            queueRenderPage(pageNum);
+        }
+        document.getElementById('next').addEventListener('click', onNextPage);
+
+        /**
+         * Zoom in page.
+         */
+        function onZoomIn() {
+            scale += zoomRange;
+            queueRenderPage(pageNum);
+        }
+        document.getElementById('zoomin').addEventListener('click', onZoomIn);
+
+        /**
+         * Zoom out page.
+         */
+        function onZoomOut() {
+            if (scale <= zoomRange) {
+                return;
+            }
+            scale -= zoomRange;
+            queueRenderPage(pageNum);
+        }
+        document.getElementById('zoomout').addEventListener('click', onZoomOut);
+
+        /**
+         * Zoom fit page.
+         */
+        function onZoomFit() {
+            scale = 1;
+            queueRenderPage(pageNum);
+        }
+        document.getElementById('zoomfit').addEventListener('click', onZoomFit);
+
+        /**
+         * Asynchronously downloads PDF.
+         */
+        pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+            pdfDoc = pdfDoc_;
+            document.getElementById('page_count').textContent = '/ ' + pdfDoc.numPages;
+
+            $('#page_num').on('change', function() {
+                var pageNumber = Number($(this).val());
+                if(pageNumber > 0 && pageNumber <= pdfDoc.numPages) {
+                    queueRenderPage(pageNumber);
+                }
+            });
+
+            // Initial/first page rendering
+            renderPage(pageNum);
+        });
+    </script>
+</body>
+</html>
