@@ -146,6 +146,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\images\favicon.png" />
+    <Content Include="Scripts\report-preview.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -177,7 +178,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\PdfWithBytes.cshtml" />
-    <Content Include="Views\Home\IndexByChatGpt.cshtml" />
+    <Content Include="Views\Home\_ReportPreviewer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
